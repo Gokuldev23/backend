@@ -1,22 +1,16 @@
+const { getAllContact, getSingleContact, updateAContact, deleteAContact, createAContact } = require('../controllers/contactController')
+
 const router = require('express').Router()
 
+router.get('/',getAllContact)
 
-router.get('/',(req,res)=>{
-    res.status(200).json({message:"i am contact"})
-})
+router.get('/:id',getSingleContact)
 
-router.post('/create',(req,res)=>{
-    res.status(200).json({message:"the contact created"})
-})
+router.post('/',createAContact)
 
+router.put('/:id',updateAContact)
 
-router.put('/update/:id',(req,res)=>{
-    res.status(200).json({message:`the contact ${req.params.id} updated`})
-})
-
-router.delete('/delete/:id',(req,res)=>{
-    res.status(200).json({message:`the contact ${req.params.id} updated`})
-})
+router.delete('/:id',deleteAContact)
 
 
 
