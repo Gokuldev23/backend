@@ -13,6 +13,7 @@ app.get('/', (req, res) => res.send('Hello World!'))
 
 app.use(express.json())
 app.use('/api/contacts',require('./routes/contact'))
+app.use('/api/user',require('./routes/users'))
 app.use(errorHandler)
 
 
