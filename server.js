@@ -1,9 +1,12 @@
 const express = require('express')
 const { errorHandler } = require('./middleWare/errorHandler')
+const { connectToMongoDb } = require('./config/connectDb')
 const dotenv = require('dotenv').config()
 
 const app = express()
 const port = process.env.PORT
+
+connectToMongoDb()
 
 app.get('/', (req, res) => res.send('Hello World!'))
 

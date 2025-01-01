@@ -1,13 +1,23 @@
 
 const asyncHandler = require('express-async-handler')
+const contactModel = require('../models/contactModel')
 
 
-const getAllContact = asyncHandler((req,res) =>{
-    res.status(200).json({message:"get All contact"})
+const getAllContact = asyncHandler(async (req,res) =>{
+    let response = await contactModel.find()
+    res.status(200).json({message:"get All contact",data:response})
 })
 
-const createAContact = asyncHandler((req,res) =>{
-    res.status(200).json({message:" contact created"})
+const createAContact = asyncHandler(async(req,res) =>{
+    const {name,email} = req.body
+    if(!name || !email){
+        return res.status(400).json({message:"Some fields are empty"})
+    }
+    const contact = await contactModel.create({
+        name,
+        email
+    })
+    res.status(200).json({message:" contact created",data:contact})
 })
 
 const getSingleContact = asyncHandler((req,res) =>{
