@@ -4,16 +4,19 @@ const contactModel = require('../models/contactModel')
 
 
 const getAllContact = asyncHandler(async (req,res) =>{
+    let currentUser = req.user
     let response = await contactModel.find()
     res.status(200).json({message:"get All contact",data:response})
 })
 
 const createAContact = asyncHandler(async(req,res) =>{
     const {name,email} = req.body
+    let currentUser = req.user
     if(!name || !email){
         return res.status(400).json({message:"Some fields are empty"})
     }
     const contact = await contactModel.create({
+        user_id:currentUser.id,
         name,
         email
     })

@@ -39,31 +39,22 @@ const login = asyncHandler(async(req,res) =>{
     delete user.password
     let a_token = jwt.sign(
         {
-            userData:user
+            userData:{
+                id:user._id,
+                name:user.name,
+                email:user.email
+            }
         },
         process.env.ACCESS_TOKEN_SECRET,
-        {expiresIn:'1m'}
+        {expiresIn:'15m'}
     )
 
     res.status(200).json({message:"user logged In",data:a_token})
 })
 
 const currentUser = asyncHandler(async(req,res) =>{
-
-    const header = req.headers.authorization
-    if(!header){
-        res.status(401).json({message:"Unauthorised token not present or Invalid"})
-    }
-    let token = header.split(' ')[1]
-
-    let userData = jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,decode)=>{
-        if(err){
-            res.status(401).json({message:"User is Unauthorised"})
-        }
-        console.log(decode)
-    })
-    
-    res.status(200).json({message:`Current User data`,data:null})
+    console.log(req.user)
+    res.status(200).json({message:`Current User data`,data:req.user})
 })
 
 module.exports = {register,login,currentUser}
